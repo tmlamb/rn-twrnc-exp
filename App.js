@@ -1,43 +1,22 @@
+import {NavigationContainer} from "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import tw, {useAppColorScheme, useDeviceContext} from "twrnc";
 import Layout from "./components/Layout";
-import { useDeviceContext, useAppColorScheme } from 'twrnc';
-import Home from "./screens/Home";
-import tw from "twrnc"
-import { Text, TouchableOpacity, View } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import About from "./screens/About";
-import { Button } from "react-native-web";
+import Home from "./screens/Home";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  useDeviceContext(tw, { withDeviceColorScheme: false });
-  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  useDeviceContext(tw);
+  const [colorScheme, toggleColorScheme, setColorScheme] =
+    useAppColorScheme(tw);
 
   return (
     <Layout>
-      <TouchableOpacity onPress={toggleColorScheme}>
-        <Text
-          style={tw`bg-gray-200 dark:bg-gray-900 text-black dark:text-white 
-                capitalize p-2 mt-24 text-center`}
-        >
-          toggle theme
-        </Text>
-      </TouchableOpacity>
       {/* navigation container */}
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerRight: () => (
-            <TouchableOpacity onPress={toggleColorScheme}>
-              <Text
-                style={tw`bg-gray-200 dark:bg-gray-900 text-black dark:text-white 
-                capitalize p-2 rounded`}
-              >
-                toggle theme
-              </Text>
-            </TouchableOpacity>
-          ),
-        }}>
+        <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="About" component={About} />
         </Stack.Navigator>
